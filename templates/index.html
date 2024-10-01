@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archaeological Dating Platform</title>
+</head>
+<body>
+    <h1>Submit Archaeological Dating Data</h1>
+    <form action="/submit" method="post">
+        <label for="site_name">Site Name:</label>
+        <input type="text" id="site_name" name="site_name" required><br>
+
+        <label for="dating_method">Dating Method:</label>
+        <input type="text" id="dating_method" name="dating_method" required><br>
+
+        <label for="date">Date:</label>
+        <input type="text" id="date" name="date" required><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <h2>Existing Data:</h2>
+    <ul id="data-list"></ul>
+
+    <script>
+        // JavaScript code to fetch and display data
+        fetch('/data')
+            .then(response => response.json())
+            .then(data => {
+                const dataList = document.getElementById('data-list');
+                data.forEach(entry => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${entry['Site Name']}: ${entry['Dating Method']} - ${entry['Date']}`;
+                    dataList.appendChild(listItem);
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
+</body>
+</html>
